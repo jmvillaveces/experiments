@@ -1,3 +1,3 @@
-module.exports = {
-    fractals : requre('fractals/Htree')
-}
+global.Experiments = {
+    fractals : require('./fractals/Htree')
+};

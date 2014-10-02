@@ -18,5 +18,10 @@
   "homepage": "https://github.com/jmVillaveces/experiments",
   "dependencies": {
     "d3": "^3.4.11"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.0.1",
+    "grunt-contrib-jshint": "^0.10.0"
   }
 }
