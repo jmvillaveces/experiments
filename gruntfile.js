@@ -17,10 +17,17 @@ module.exports = function(grunt) {
         },
         browserify: {
             'dist/js/experiments.js': ['index.js']
+        },
+        watch: {
+            compile:{
+                files: ['<%= jshint.files %>'],
+                tasks: ['jshint', 'browserify']
+            }
         }
     });
     
      // Load the plugins
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 };

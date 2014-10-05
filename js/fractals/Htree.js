@@ -1,13 +1,12 @@
 var d3 = require('d3');
 
 var angle = 45,
-    decrease = 0.1,
-    tag = 'body', 
+    decrease = 0.3,//Math.sqrt(2),
+    tag = 'body',
     width = 500, 
     height = 500, 
     iterations = 10, 
     svg = null,
-    line = null,
     data = [];
 
 var lineFunction = d3.svg.line()
@@ -15,12 +14,16 @@ var lineFunction = d3.svg.line()
                          .y(function(d) { return d.y; })
                          .interpolate('linear');
 
-var op = function(angle, h){
-    return Math.sin(angle)*h;
+var toRadians = function(deg) {
+    return deg * (Math.PI / 180);
 };
 
-var ad = function(angle, h){
-    return Math.cos(angle)*h;
+var op = function(a, h){
+    return Math.sin(a)*h;
+};
+
+var ad = function(a, h){
+    return Math.cos(a)*h;
 };
 
 var paint = function(){
@@ -36,21 +39,17 @@ var paint = function(){
     line.exit().remove();
 };
 
-var calculate = function myself(line){
+var createLines = function self(point, a, l, n){
+    if(n === 0) return;
     
-    if(iterations > 0){
-        data.push(line);
-        
-        var newLine = [line[1]];
-        newLine.push({x: line[1].x + op(angle, 100), y: line[1].y +ad(angle, 100)});
-        
-        iterations --;
-        
-        
-        myself(newLine); 
-    }
+    var rPoint = {x: point.x + op(a, l), y: point.y + ad(a, l)};
+    var lPoint = {x: point.x - op(a, l), y: point.y + ad(a, l)};
     
-    paint();
+    data.push([point, rPoint]);
+    data.push([point, lPoint]);
+    
+    self(rPoint, a+angle, l-(l*decrease), n-1);
+    self(lPoint, a+angle, l-(l*decrease), n-1);
 };
 
 var HTree = function(){
@@ -64,7 +63,16 @@ var HTree = function(){
 
 
 HTree.start = function(){
-    calculate([{x:10,y:10},{x:10,y:100}]);
+    
+    angle = toRadians(angle);
+    
+    //createLine([{x:0,y:0}], 0, 100, iterations);
+    
+    createLines({x:200,y:200}, 0, 100, 2);
+    
+    
+    console.log(data);
+    paint();
 };
 
 module.exports = HTree;
