@@ -15,20 +15,20 @@ var lineFunction = d3.svg.line()
                          .y(function(d) { return d.y; })
                          .interpolate('linear');
 
-var op = function(h){
+var op = function(angle, h){
     return Math.sin(angle)*h;
-}
+};
 
-var ad = function(h){
+var ad = function(angle, h){
     return Math.cos(angle)*h;
-}
+};
 
 var paint = function(){
     
     line = svg.selectAll('path').data(data);
     
     line.enter().append('path')
-            .attr('d', function(d) {return lineFunction(d)})
+            .attr('d', function(d) {return lineFunction(d);})
             .attr('stroke', 'blue')
             .attr("stroke-width", 2)
             .attr("fill", "none");
@@ -42,7 +42,7 @@ var calculate = function myself(line){
         data.push(line);
         
         var newLine = [line[1]];
-        newLine.push({x: line[1].x + op(100), y: line[1].y +ad(100)});
+        newLine.push({x: line[1].x + op(angle, 100), y: line[1].y +ad(angle, 100)});
         
         iterations --;
         
@@ -51,7 +51,7 @@ var calculate = function myself(line){
     }
     
     paint();
-}
+};
 
 var HTree = function(){
 
@@ -64,7 +64,7 @@ var HTree = function(){
 
 
 HTree.start = function(){
-    calculate([{x:10,y:10},{x:10,y:100}])
+    calculate([{x:10,y:10},{x:10,y:100}]);
 };
 
 module.exports = HTree;

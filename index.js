@@ -1,3 +1,5 @@
-global.Experiments = {
-    fractals : require('./fractals/Htree')
+var Experiments = {
+    fractals : require('./js/fractals/Htree')
 };
+
+window.Experiments = Experiments;
