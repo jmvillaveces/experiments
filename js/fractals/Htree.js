@@ -1,6 +1,6 @@
 var d3 = require('d3');
 
-var angle = 90,
+var angle = 45,
     ratio = 1.5,//Math.sqrt(2),
     tag = 'body',
     width = 800, 
@@ -67,7 +67,7 @@ var HTree = function(){
 
 
 HTree.start = function(){
-    drawTree(400, 500, -90, 150, iterations);
+    drawTree(400, 500, -90, height/2.7, iterations);
 };
 
 module.exports = HTree;
